@@ -1,0 +1,19 @@
+#!groovy
+pipeline{
+	agent any
+	stages{
+		stage('Maven install'){
+			steps{
+				docker{
+					image 'maven:3.5.0'
+				}
+				sh 'mvn clean install'
+			}
+		}
+		stage{'Docker Build'}{
+			steps{
+				sh 'docker build -t shanem/spring-petclinic:latest .'
+			}
+		}
+	}
+}
